@@ -2,31 +2,49 @@
 
 const bookmarks = (function() {
 
-  function render() {
+  function generateBookmarkElement(item) {
+    //returns html for given item
+  }
 
-  };
+  function generateBookmarkString(bookmarks) {
+    //map on generateBookmarkElement(bookmarks)
+    //join bookmarks array
+  }
+
+  function render() {
+    //LATER: render error
+
+    //set variable for bookmarks array
+    //filters for addExpand, minStars
+    //inserts html for generateBookmarksString
+  }
+
+  function getItem(item) {
+    //Retrieves ID from target item
+  }
 
   //Event Listeners
 
   function handleAddBookmarkExpand() {
     //Listens for submit on .initial-add
     //prevents default behavior
-    //Toggles addExpand property
+    //runs toggleAddExpand for store.addExpand property
     //render
   }
 
   function handleAddBookmark() {
     //Listens for submit on .bookmarkAdd
     //prevents default behavior
-    //creates variable with new item name, passes into API method
-    //Calls api.createItems, which calls store.addItem function
+    //creates variables with new item title, url, desc, & rating, & passes into API method
+    //Calls api.createItems, which calls store.addItem function & toggleAddExpand for store.addExpand property
     //render
   }
 
-  function handleCancelBookmark() {
-    //Listens for submit on target #expanded-add-bookmark's input class .bookmarkCancel
+  function handleCancelBookmarkExpand() {
+    //Listens for submit on target #expanded-add-bookmark's button .bookmarkCancel
     //prevents default behavior
-    //
+    //runs toggleAddExpand for store.addExpand property
+    //render
   }
 
   function handleSelectBookmark() {
@@ -37,19 +55,25 @@ const bookmarks = (function() {
   }
 
   function handleDeleteBookmark() {
-    //Listens for submit on target #expanded-add-bookmark's input .bookmarkCancel
+    //Listens for submit on target #expanded-bookmark's button .delete
     //prevents default behavior
     //creates variable with target item ID, passes into API method
     //Calls api.deleteItems, which calls store.deleteItem function
     //render
   }
 
+  function bindEventListeners() {
+    getItem();
+    handleAddBookmarkExpand();
+    handleAddBookmark();
+    handleCancelBookmarkExpand();
+    handleSelectBookmark();
+    handleDeleteBookmark();
+  }
+
   return {
-    handleAddBookmarkExpand,
-    handleAddBookmark,
-    handleCancelBookmark,
-    handleSelectBookmark,
-    handleDeleteBookmark,
+    bindEventListeners,
+    render,
   };
 
 }());
