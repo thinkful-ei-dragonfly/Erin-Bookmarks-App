@@ -3,20 +3,29 @@
 const store = (function() {
 
   function addItem(item) {
-    this.bookmarks.push(item);
-    this.bookmarks.expanded = false;
+    this.items.push(item);
+    this.items.expanded = false;
   }
 
   function deleteItem(id) {
-    this.bookmarks = this.bookmarks.filter(item => item.id === id);
+    this.items = this.items.filter(item => item.id === id);
   }
 
   function toggleAddExpand() {
     this.addExpand = !this.addExpand;
   }
 
+  function setMinStars(val) {
+    this.minStars = val;
+  }
+
+  function setTargetBookmarkExpand(id) {
+    let item = this.items.find(item => item.id === id);
+    item.expanded = !item.expanded;
+  }
+
   return {
-    bookmarks: [],
+    items: [],
     addExpand: false,
     error: null,
     minStars: null,
@@ -24,6 +33,8 @@ const store = (function() {
     addItem,
     deleteItem,
     toggleAddExpand,
+    setMinStars,
+    setTargetBookmarkExpand,
   };
 
 }());

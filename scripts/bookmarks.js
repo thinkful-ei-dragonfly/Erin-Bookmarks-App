@@ -43,14 +43,14 @@ const bookmarks = (function() {
   function handleCancelBookmarkExpand() {
     //Listens for submit on target #expanded-add-bookmark's button .bookmarkCancel
     //prevents default behavior
-    //runs toggleAddExpand for store.addExpand property
+    //runs store.toggleAddExpand function for store.addExpand property
     //render
   }
 
   function handleSelectBookmark() {
     //Listens for submit on target .initial-bookmark-container's ul class .bookmark
     //prevents default behavior
-    //Toggles target bookmark's expanded property
+    //toggles target bookmark's expanded property with store.targetBookmarkExpand
     //render
   }
 
@@ -58,7 +58,13 @@ const bookmarks = (function() {
     //Listens for submit on target #expanded-bookmark's button .delete
     //prevents default behavior
     //creates variable with target item ID, passes into API method
-    //Calls api.deleteItems, which calls store.deleteItem function
+    //calls api.deleteItems, which calls store.deleteItem function
+    //render
+  }
+
+  function handleSetRating() {
+    //listens for selection on radio buttons --> ?
+    //sets value of minStars property with store.setMinStars function
     //render
   }
 
@@ -69,6 +75,7 @@ const bookmarks = (function() {
     handleCancelBookmarkExpand();
     handleSelectBookmark();
     handleDeleteBookmark();
+    handleSetRating();
   }
 
   return {
