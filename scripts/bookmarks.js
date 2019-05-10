@@ -19,8 +19,7 @@ const bookmarks = (function() {
     //inserts html for generateBookmarksString
   }
 
-  function getItem(item) {
-    //Retrieves ID from target item
+  function getItemId(item) {
   }
 
   //Event Listeners
@@ -69,7 +68,7 @@ const bookmarks = (function() {
   }
 
   function bindEventListeners() {
-    getItem();
+    getItemId();
     handleAddBookmarkExpand();
     handleAddBookmark();
     handleCancelBookmarkExpand();

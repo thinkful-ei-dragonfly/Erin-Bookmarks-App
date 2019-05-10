@@ -4,11 +4,11 @@ const store = (function() {
 
   function addItem(item) {
     this.items.push(item);
-    this.items.expanded = false;
+    item.expanded = false;
   }
 
   function deleteItem(id) {
-    this.items = this.items.filter(item => item.id === id);
+    this.items = this.items.filter(item => item.id !== id);
   }
 
   function toggleAddExpand() {
