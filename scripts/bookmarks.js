@@ -43,7 +43,7 @@ const bookmarks = (function() {
       <li class="bookmark" data-item-id="${item.id}">
         <span class="bookmark-item"></span>
         <h3>${item.title}</h3>
-            <button type="button" class="bookmarkLink">Visit Page</button>
+            <a href="${item.url}" class="button" target="_blank">Visit Page</a>
             <button type="button" class="delete">Delete</button>
             <button type="button" class="return">Return to list view</button>
         <p>${stars}</p>
@@ -58,26 +58,7 @@ const bookmarks = (function() {
     return bookmarks.join('');
   }
 
-  function getItemId(item) {
-    return $(item)
-      .closest('.bookmark')
-      .data('item-id');
-  }
-
-  //CLEAN UP RENDER FUNCTION!
-  function render() {
-    //LATER: render error
-
-    //set variable for bookmarks array
-    //filter minStars
-    //addExpand?
-    //inserts html for generateBookmarksString
-    let items = [...store.items];
-
-    if (store.minStars) {
-      let filteredItems = items.filter(item => item.rating >= store.minStars);
-      items = filteredItems;
-    }
+  function generateAddBookmarkString() {
     let bookmarkData;
     if (!store.addExpand) {
       bookmarkData = `
@@ -88,16 +69,42 @@ const bookmarks = (function() {
         <input type="text" class="addTitle" name="addTitle" placeholder="Add title here" required>
         <input type="text" class="addURL" name="addURL" placeholder="Add URL here" required>
         <input type="text" class="addDesc" name="addDesc" placeholder="Add description here"><br>
-        <input type="radio" name="rating" value="one-star" checked>1 star<br>
-        <input type="radio" name="rating" value="two-stars">2 stars<br>
-        <input type="radio" name="rating" value="three-stars">3 stars<br>
-        <input type="radio" name="rating" value="four-stars">4 stars<br>
-        <input type="radio" name="rating" value="five-stars">5 stars<br>
+        <select name="add-rating" class="add-rating">
+          <option value="1" class ="option-1">1 Star</option>
+          <option value="2" class ="option-2">2 Stars</option>
+          <option value="3" class ="option-3">3 Stars</option>
+          <option value="4" class ="option-4">4 Stars</option>
+          <option value="5" class ="option-5">5 Stars</option>
+        </select>
         <button type="submit" class="bookmarkAdd">Add</button>
         <button type="button" class="bookmarkCancel">Cancel</button>
       </form>`;}
+    return bookmarkData;
+  }
 
+  function getItemId(item) {
+    return $(item)
+      .closest('.bookmark')
+      .data('item-id');
+  }
+
+  function render() {
+    //LATER: render error
+
+    //set variable for bookmarks array
+    //filter minStars
+    //addExpand
+    //inserts html for generateBookmarksString
+    let items = [...store.items];
+
+    if (store.minStars) {
+      let filteredItems = items.filter(item => item.rating >= store.minStars);
+      items = filteredItems;
+    }
+
+    let bookmarkData = generateAddBookmarkString();
     let bookmarkString = generateBookmarkString(items);
+
     $('.add-bookmark-container').html(bookmarkData);
     $('.bookmark-container').html(bookmarkString);
   }
@@ -122,6 +129,22 @@ const bookmarks = (function() {
     //creates variables with new item title, url, desc, & rating, & passes into API method
     //Calls api.createItems, which calls store.addItem function & toggleAddExpand for store.addExpand property
     //render
+    $('.add-bookmark-container').on('submit', '#expanded-add-bookmark', event => {
+      event.preventDefault();
+      let title = $('.addTitle').val();
+      let url = $('.addURL').val();
+      let desc = $('.addDesc').val();
+      let rating = $('.add-rating').val();
+      
+      api.createItems(title, url, desc, rating)
+        .then(res => res.json())
+        .then((newItem) => {
+          console.log(newItem, 'new item');
+          store.addItem(newItem);
+          render();
+          console.log('created new item!');
+        });
+    });
   }
 
   function handleCancelBookmarkExpand() {
