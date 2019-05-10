@@ -72,7 +72,28 @@ const bookmarks = (function() {
     if (store.minStars) {
       items = items.filter(item => item.rating >= store.minStars);
     }
+    let bookmarkData;
+    if (!store.addExpand) {
+      bookmarkData = `
+      <form id="initial-add-bookmark">
+        <button type="submit" class="initialAdd">Add Bookmark</button>
+      </form>`;}
+    else {
+      bookmarkData = `
+      <form id="expanded-add-bookmark">
+        <input type="text" class="addTitle" name="addTitle" placeholder="Add title here" required>
+        <input type="text" class="addURL" name="addURL" placeholder="Add URL here" required>
+        <input type="text" class="addDesc" name="addDesc" placeholder="Add description here"><br>
+        <input type="radio" name="rating" value="one-star" checked>1 star<br>
+        <input type="radio" name="rating" value="two-stars">2 stars<br>
+        <input type="radio" name="rating" value="three-stars">3 stars<br>
+        <input type="radio" name="rating" value="four-stars">4 stars<br>
+        <input type="radio" name="rating" value="five-stars">5 stars<br>
+        <button type="submit" class="bookmarkAdd">Add</button>
+        <button type="submit" class="bookmarkCancel">Cancel</button>
+      </form>`;}
 
+    $('.add-bookmark-container').html(bookmarkData);
     $('.bookmark-container').html(bookmarkString);
   }
    
