@@ -33,7 +33,7 @@ const bookmarks = (function() {
       <li class="bookmark" data-item-id="${item.id}">
         <span class="bookmark-item"></span>
         <h3>${item.title}</h3>
-        <p class = "stars">${stars}</p>
+        <p class="stars">${stars}</p>
         <button type="button" class="expand-me">Expand</button>
       </li>
       `;}
@@ -41,13 +41,13 @@ const bookmarks = (function() {
       return `
       <li class="bookmark" data-item-id="${item.id}">
         <span class="bookmark-item"></span>
-        <h3>${item.title}</h3>
-            <hr>
-            <button type="button" class="delete">Delete</button>
-            <button type="button" class="return">Return to list view</button>
-            <a href="${item.url}" class="link" target="_blank">Visit Page</a>
-        <p>${stars}</p>
-        <p>${item.desc}</p>
+          <h3>${item.title}</h3>
+          <hr>
+          <button type="button" class="delete">Delete</button>
+          <button type="button" class="return">Return to list view</button>
+          <a href="${item.url}" class="link" target="_blank">Visit Page</a>
+        <p class="stars">${stars}</p>
+        <p class="desc">${item.desc}</p>
       </li>`;}
   }
 
@@ -159,6 +159,7 @@ const bookmarks = (function() {
         .then(res => res.json())
         .then((newItem) => {
           store.addItem(newItem);
+          store.setAddExpand(false);
           render();
         })
         .catch((err) => {
