@@ -5,8 +5,6 @@
 // eslint-disable-next-line no-unused-vars
 const bookmarks = (function() {
 
-  //LATER: insert error handling functions
-
   function generateBookmarkElement(item) {
     //returns html for given item
     let stars;
@@ -35,7 +33,7 @@ const bookmarks = (function() {
       <li class="bookmark" data-item-id="${item.id}">
         <span class="bookmark-item"></span>
         <h3>${item.title}</h3>
-        <p>${stars}</p>
+        <p class = "stars">${stars}</p>
         <button type="button" class="expand-me">Expand</button>
       </li>
       `;}
@@ -44,9 +42,10 @@ const bookmarks = (function() {
       <li class="bookmark" data-item-id="${item.id}">
         <span class="bookmark-item"></span>
         <h3>${item.title}</h3>
-            <a href="${item.url}" class="button" target="_blank">Visit Page</a>
+            <hr>
             <button type="button" class="delete">Delete</button>
             <button type="button" class="return">Return to list view</button>
+            <a href="${item.url}" class="link" target="_blank">Visit Page</a>
         <p>${stars}</p>
         <p>${item.desc}</p>
       </li>`;}
@@ -232,7 +231,6 @@ const bookmarks = (function() {
       let starRating = parseInt(starRatingString);
       store.setMinStars(starRating);
       render();
-      console.log(store.minStars);
     });
   }
 

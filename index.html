@@ -12,35 +12,37 @@
   </head>
 
   <body>
-    <header>
+    <header role="banner">
       <h1>Bookmarks App</h1>
     </header>
 
-  <section class="add-bookmark-container">
-  </section>
-
-  <br>
-    
-  <section class="error-container">
-  </section>
-
-  <br><br>
-
-    <section class="rating-filter-container">
-      <form id="rating-filter" method="post">
-        <label for="min-rating">Rating Filter</label>
-        <select name="min-rating">
-          <option value="1" class="one">1 Star</option>
-          <option value="2" class="two">2 Stars</option>
-          <option value="3" class="three">3 Stars</option>
-          <option value="4" class="four">4 Stars</option>
-          <option value="5" class="five">5 Stars</option>
-        </select>
-      </form>
+  <main role= "main">
+  <div class="container">
+    <section class="add-bookmark-container" role="region">
     </section>
 
-    <ul class="bookmark-container">
-    </ul>
+      <hr>
+    
+      <section class="error-container" role="region">
+      </section>
+
+      <section class="rating-filter-container" role="region">
+        <form id="rating-filter" method="post">
+          <label for="min-rating">Rating Filter</label>
+          <select name="min-rating">
+            <option value="1" class="one">1 Star</option>
+            <option value="2" class="two">2 Stars</option>
+            <option value="3" class="three">3 Stars</option>
+            <option value="4" class="four">4 Stars</option>
+            <option value="5" class="five">5 Stars</option>
+          </select>
+        </form>
+      </section>
+
+      <ul class="bookmark-container">
+      </ul>
+    </div>
+    </main>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cuid/1.3.8/browser-cuid.min.js"></script>   <!-- unique ID generator -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

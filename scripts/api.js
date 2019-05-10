@@ -4,6 +4,7 @@
 const api = (function() {
   const BASE_URL= 'https://thinkful-list-api.herokuapp.com/erind';
 
+  
   let getItems= function(){
     //This method will GET request on /bookmarks and return a promise
     return fetch(`${BASE_URL}/bookmarks`);

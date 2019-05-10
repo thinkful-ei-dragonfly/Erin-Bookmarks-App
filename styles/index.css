@@ -1,3 +1,4 @@
+
 body {
   font-family: 'Montserrat', sans-serif;
 }
@@ -6,7 +7,89 @@ header {
   text-align: center;
 }
 
+.container {
+  margin: 0 auto;
+}
+
+.addTitle, .addURL, .addDesc {
+  display: block;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
 .error-container {
   color: red;
+}
+
+hr {
+  border: 1px solid grey;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.expand-me {
+  display: block;
+  width: 25%;
+  height: auto;
+  text-align: center;
+  padding: 5px;
+  border-radius: 3px;
+  background: #fcfcfc;
+  margin: 10px auto 10px;
+  transition: opacity 0.4s;
+}
+
+.initialAdd {
+  display: block;
+  width: 75%;
+  height: auto;
+  text-align: center;
+  padding: 5px;
+  border-radius: 3px;
+  background: #fcfcfc;
+  margin: 10px auto 10px;
+  transition: opacity 0.4s;
+}
+
+.add-bookmark-container {
+  width: 75%;
+  display: block;
+  margin: 10px auto 10px;
+}
+
+h3 {
+  font-size: 16px;
+  font-style: normal;
+  text-align: center;
+}
+
+
+.link {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.delete, .return {
+  margin-bottom: 5px;
+}
+
+.stars {
+  font-size: 30px;
+}
+
+li {
+  display: block;
+  width: 75%;
+  list-style: none;
+  padding-left: 0;
+  border: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #EDF4F8;
+  border-radius: 15px;
+  border: 1px grey solid;
+  margin-bottom: 10px;
 }
 
