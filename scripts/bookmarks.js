@@ -6,12 +6,33 @@ const bookmarks = (function() {
 
   function generateBookmarkElement(item) {
     //returns html for given item
+    let stars;
+    if (item.rating === 5) {
+      stars = '<p>&#9733;&#9733;&#9733;&#9733;&#9733;</p>';
+    }
+    else if (item.rating === 4) {
+      stars = '<p>&#9733;&#9733;&#9733;&#9733;</p>';
+    }
+    else if (item.rating === 3) {
+      stars = '<p>&#9733;&#9733;&#9733;</p>';
+    }
+    else if (item.rating === 2) {
+      stars = '<p>&#9733;&#9733;</p>';
+    }
+    else if (item.rating === 1) {
+      stars = '<p>&#9733;&#9733</p>';
+    }
+    else {
+      stars = '';
+    }
+
+
     if (!item.expanded) {
       return `
       <li class="bookmark">
         <span class="bookmark-item"></span>
         <h3>${item.title}</h3>
-        <p>&#9733;&#9733;&#9733;</p>
+        <p>${stars}</p>
       </li>
       `;}
     else {
@@ -23,8 +44,8 @@ const bookmarks = (function() {
             <button type="submit" class="bookmarkLink">Visit Page</button>
             <button type="submit" class="delete">Delete</button>
         </form>
-        <p>&#9733;&#9733;&#9733;</p>
-        <p>Description here: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce accumsan neque ac egestas porta. In egestas dapibus venenatis.</p>
+        <p>${stars}</p>
+        <p>${item.desc}</p>
       </li>`;}
   }
 

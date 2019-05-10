@@ -4,8 +4,8 @@
 const store = (function() {
 
   const addItem = function(item) {
-    this.items.push(item);
     item.expanded = false;
+    this.items.push(item);
   };
 
   const deleteItem = function(id) {
