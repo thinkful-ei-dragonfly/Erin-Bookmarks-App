@@ -25,6 +25,10 @@ const store = (function() {
     item.expanded = !item.expanded;
   };
 
+  const setError = function(error) {
+    this.error = error;
+  };
+
   return {
     items: [],
     addExpand: false,
@@ -36,6 +40,7 @@ const store = (function() {
     setAddExpand,
     setMinStars,
     setTargetBookmarkExpand,
+    setError,
   };
 
 }());

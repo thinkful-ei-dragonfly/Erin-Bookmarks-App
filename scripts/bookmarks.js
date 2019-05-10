@@ -2,6 +2,7 @@
 
 /* global store, api, $ */
 
+// eslint-disable-next-line no-unused-vars
 const bookmarks = (function() {
 
   //LATER: insert error handling functions
@@ -88,6 +89,25 @@ const bookmarks = (function() {
       .data('item-id');
   }
 
+  function generateError(message) {
+    return `
+    <p>${message}</p>
+      <form id="error-message">
+          <button type="submit" class="cancelError">Cancel</button>
+      </form>
+      `;
+  }
+
+  function renderError() {
+    if (store.error) {
+      let warning = generateError(store.error);
+      $('.error-container').html(warning);
+    }
+    else {
+      $('.error-container').empty();
+    }
+  }
+
   function render() {
     //LATER: render error
 
@@ -139,10 +159,13 @@ const bookmarks = (function() {
       api.createItems(title, url, desc, rating)
         .then(res => res.json())
         .then((newItem) => {
-          console.log(newItem, 'new item');
           store.addItem(newItem);
           render();
-          console.log('created new item!');
+        })
+        .catch((err) => {
+          console.log(err);
+          store.setError(err.message);
+          renderError();
         });
     });
   }
@@ -191,9 +214,14 @@ const bookmarks = (function() {
         .then(() => {
           store.deleteItem(id);
           render();
+        })
+        .catch((err) => {
+          console.log(err);
+          store.setError(err.message);
+          renderError();
         });
-
-    });}
+    });
+  }
 
   function handleSetRating() {
     //listens for selection on dropdown (if statements?)
