@@ -9,19 +9,19 @@ const bookmarks = (function() {
     //returns html for given item
     let stars;
     if (item.rating === 5) {
-      stars = '<p>&#9733;&#9733;&#9733;&#9733;&#9733;</p>';
+      stars = '&#9733;&#9733;&#9733;&#9733;&#9733;';
     }
     else if (item.rating === 4) {
-      stars = '<p>&#9733;&#9733;&#9733;&#9733;</p>';
+      stars = '&#9733;&#9733;&#9733;&#9733;';
     }
     else if (item.rating === 3) {
-      stars = '<p>&#9733;&#9733;&#9733;</p>';
+      stars = '&#9733;&#9733;&#9733;';
     }
     else if (item.rating === 2) {
-      stars = '<p>&#9733;&#9733;</p>';
+      stars = '&#9733;&#9733;';
     }
     else if (item.rating === 1) {
-      stars = '<p>&#9733;&#9733</p>';
+      stars = '&#9733;&#9733';
     }
     else {
       stars = '';
@@ -98,13 +98,14 @@ const bookmarks = (function() {
   }
 
   function renderError() {
+    let error = generateError(store.error);
     if (store.error) {
-      let warning = generateError(store.error);
-      $('.error-container').html(warning);
+      $('.error-container').innerHTML= this.error;
     }
     else {
       $('.error-container').empty();
     }
+    return error;
   }
 
   function render() {
@@ -163,7 +164,7 @@ const bookmarks = (function() {
           render();
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           store.setError(err.message);
           renderError();
         });

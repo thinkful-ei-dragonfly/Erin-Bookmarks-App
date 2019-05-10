@@ -1,4 +1,3 @@
-
 body {
   font-family: 'Montserrat', sans-serif;
 }
@@ -10,6 +9,7 @@ header {
 .bookmark-container {
   margin: 0 auto;
   text-align: center;
+  padding: 0px;
 }
 
 #expanded-add-bookmark {
@@ -75,9 +75,9 @@ button {
 }
 
 .add-bookmark-container {
-  width: 75%;
+  width: 100%;
   display: block;
-  margin: 10px auto 10px;
+  margin: 10px auto 10px auto;
 }
 
 h3, a {
