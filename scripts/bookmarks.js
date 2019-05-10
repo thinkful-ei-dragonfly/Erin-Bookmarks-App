@@ -1,6 +1,6 @@
 'use strict';
 
-/* global store, $ */
+/* global store, api, $ */
 
 const bookmarks = (function() {
 
@@ -161,7 +161,16 @@ const bookmarks = (function() {
     //creates variable with target item ID, passes into API method
     //calls api.deleteItems, which calls store.deleteItem function
     //render
-  }
+    $('.bookmark-container').on('click', '.delete', event => {
+      let id = getItemId(event.currentTarget);
+
+      api.deleteItems(id)
+        .then(() => {
+          store.deleteItem(id);
+          render();
+        });
+
+    });}
 
   function handleSetRating() {
     //listens for selection on dropdown (if statements?)
