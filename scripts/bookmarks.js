@@ -68,6 +68,7 @@ const bookmarks = (function() {
       .data('item-id');
   }
 
+  //CLEAN UP RENDER FUNCTION!
   function render() {
     //LATER: render error
 
@@ -97,7 +98,7 @@ const bookmarks = (function() {
         <input type="radio" name="rating" value="four-stars">4 stars<br>
         <input type="radio" name="rating" value="five-stars">5 stars<br>
         <button type="submit" class="bookmarkAdd">Add</button>
-        <button type="submit" class="bookmarkCancel">Cancel</button>
+        <button type="button" class="bookmarkCancel">Cancel</button>
       </form>`;}
 
     let bookmarkString = generateBookmarkString(items);
@@ -132,6 +133,10 @@ const bookmarks = (function() {
     //prevents default behavior
     //runs store.setAddExpand function and sets to false
     //render
+    $('.add-bookmark-container').on('click', '.bookmarkCancel', event => {
+      store.setAddExpand(false);
+      render();
+    });
   }
 
   function handleSelectBookmark() {
