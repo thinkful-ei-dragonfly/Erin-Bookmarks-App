@@ -1,12 +1,17 @@
 'use strict';
 
-// $(document).ready(function() {
-  
-// });
+/* global bookmarks, store, api */
 
-//Testing
+$(document).ready(function() {
+  bookmarks.bindEventListeners();
 
-store.addItem({ id: '123', title: 'hello', url: 'http://www.something.com'});
-store.addItem({ id: '124', title: 'hi', url: 'http://www.something.com'});
+  api.getItems()
+    .then((items) => {
+      items.forEach((item) => store.addItem(item));
+      bookmarks.render();
+    })
+    .catch(err => console.log(err.message));
+});
+
 
 

@@ -1,5 +1,7 @@
 'use strict';
 
+/* global store, api, $ */
+
 const bookmarks = (function() {
 
   function generateBookmarkElement(item) {
@@ -11,16 +13,25 @@ const bookmarks = (function() {
     //join bookmarks array
   }
 
+  function getItemId(item) {
+  }
+
   function render() {
     //LATER: render error
 
     //set variable for bookmarks array
-    //filters for addExpand, minStars
+    //filter minStars
+    //addExpand?? do this in generateBookmarkElement?
     //inserts html for generateBookmarksString
-  }
+    let items = [...store.items];
 
-  function getItemId(item) {
+    if (store.minStars) {
+      items = items.filter(item => item.rating >= store.minStars);
+    }
+
+    $('.expanded-bookmark-container').html(generateBookmarkString);
   }
+   
 
   //Event Listeners
 
@@ -29,6 +40,11 @@ const bookmarks = (function() {
     //prevents default behavior
     //runs toggleAddExpand for store.addExpand property
     //render
+    // ('.initial-add').on('submit', event => {
+    //   event.preventDefault();
+    //   store.toggleAddExpand();
+    //   render();
+    // });
   }
 
   function handleAddBookmark() {
