@@ -1,5 +1,6 @@
 'use strict';
 
+// eslint-disable-next-line no-unused-vars
 const api = (function() {
   const BASE_URL= 'https://thinkful-list-api.herokuapp.com/erind';
 
@@ -12,7 +13,6 @@ const api = (function() {
   let createItems= function(title, url, desc, rating) {
   //This method will POST request on /bookmarks with a JSON request body and return a promise
     let newItem = JSON.stringify({ title, url, desc, rating: parseInt(rating, 10) });
-    //let newItem= { "title": title, "url": url, "desc": desc, "rating": rating };
     return fetch(`${BASE_URL}/bookmarks`, {
       method: 'POST',
       headers: new Headers({

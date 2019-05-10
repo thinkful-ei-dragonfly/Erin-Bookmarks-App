@@ -1,16 +1,38 @@
 'use strict';
 
-/* global store, api, $ */
+/* global store, $ */
 
 const bookmarks = (function() {
 
   function generateBookmarkElement(item) {
     //returns html for given item
+    if (!item.expanded) {
+      return `
+      <li class="bookmark">
+        <span class="bookmark-item"></span>
+        <h3>${item.title}</h3>
+        <p>&#9733;&#9733;&#9733;</p>
+      </li>
+      `;}
+    else {
+      return `
+      <li class="bookmark">
+        <span class="bookmark-item"></span>
+        <h3>${item.title}</h3>
+        <form id="expanded-bookmark">
+            <button type="submit" class="bookmarkLink">Visit Page</button>
+            <button type="submit" class="delete">Delete</button>
+        </form>
+        <p>&#9733;&#9733;&#9733;</p>
+        <p>Description here: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce accumsan neque ac egestas porta. In egestas dapibus venenatis.</p>
+      </li>`;}
   }
 
-  function generateBookmarkString(bookmarks) {
+  function generateBookmarkString(items) {
     //map on generateBookmarkElement(bookmarks)
     //join bookmarks array
+    const bookmarks = items.map((item) => generateBookmarkElement(item));
+    return bookmarks.join('');
   }
 
   function getItemId(item) {
@@ -21,15 +43,16 @@ const bookmarks = (function() {
 
     //set variable for bookmarks array
     //filter minStars
-    //addExpand?? do this in generateBookmarkElement?
+    //addExpand?
     //inserts html for generateBookmarksString
     let items = [...store.items];
+    let bookmarkString = generateBookmarkString(items);
 
     if (store.minStars) {
       items = items.filter(item => item.rating >= store.minStars);
     }
 
-    $('.expanded-bookmark-container').html(generateBookmarkString);
+    $('.bookmark-container').html(bookmarkString);
   }
    
 
@@ -78,7 +101,7 @@ const bookmarks = (function() {
   }
 
   function handleSetRating() {
-    //listens for selection on radio buttons --> ?
+    //listens for selection on dropdown
     //sets value of minStars property with store.setMinStars function
     //render
   }
