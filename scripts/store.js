@@ -12,8 +12,8 @@ const store = (function() {
     this.items = this.items.filter(item => item.id !== id);
   };
 
-  const toggleAddExpand = function() {
-    this.addExpand = !this.addExpand;
+  const setAddExpand = function(expanded) {
+    this.addExpand = expanded;
   };
 
   const setMinStars = function(val) {
@@ -33,7 +33,7 @@ const store = (function() {
 
     addItem,
     deleteItem,
-    toggleAddExpand,
+    setAddExpand,
     setMinStars,
     setTargetBookmarkExpand,
   };

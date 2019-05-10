@@ -4,6 +4,8 @@
 
 const bookmarks = (function() {
 
+  //LATER: insert error handling functions
+
   function generateBookmarkElement(item) {
     //returns html for given item
     let stars;
@@ -29,20 +31,24 @@ const bookmarks = (function() {
 
     if (!item.expanded) {
       return `
-      <li class="bookmark">
+      <li class="bookmark" item-id="${item.id}">
         <span class="bookmark-item"></span>
         <h3>${item.title}</h3>
         <p>${stars}</p>
+        <form id="expand-bookmark-button">
+            <button type="submit" class="expand-me">Expand</button>
+        </form>
       </li>
       `;}
     else {
       return `
-      <li class="bookmark">
+      <li class="bookmark" item-id="${item.id}">
         <span class="bookmark-item"></span>
         <h3>${item.title}</h3>
         <form id="expanded-bookmark">
             <button type="submit" class="bookmarkLink">Visit Page</button>
             <button type="submit" class="delete">Delete</button>
+            <button type="submit" class="return">Return to list view</button>
         </form>
         <p>${stars}</p>
         <p>${item.desc}</p>
@@ -57,6 +63,9 @@ const bookmarks = (function() {
   }
 
   function getItemId(item) {
+    return $(item)
+      .closest('.bookmark')
+      .data('item-id');
   }
 
   function render() {
@@ -67,17 +76,15 @@ const bookmarks = (function() {
     //addExpand?
     //inserts html for generateBookmarksString
     let items = [...store.items];
-    let bookmarkString = generateBookmarkString(items);
 
     if (store.minStars) {
-      items = items.filter(item => item.rating >= store.minStars);
+      let filteredItems = items.filter(item => item.rating >= store.minStars);
+      items = filteredItems;
     }
     let bookmarkData;
     if (!store.addExpand) {
       bookmarkData = `
-      <form id="initial-add-bookmark">
-        <button type="submit" class="initialAdd">Add Bookmark</button>
-      </form>`;}
+        <button type="button" class="initialAdd">Add Bookmark</button>`;}
     else {
       bookmarkData = `
       <form id="expanded-add-bookmark">
@@ -93,6 +100,7 @@ const bookmarks = (function() {
         <button type="submit" class="bookmarkCancel">Cancel</button>
       </form>`;}
 
+    let bookmarkString = generateBookmarkString(items);
     $('.add-bookmark-container').html(bookmarkData);
     $('.bookmark-container').html(bookmarkString);
   }
@@ -105,11 +113,10 @@ const bookmarks = (function() {
     //prevents default behavior
     //runs toggleAddExpand for store.addExpand property
     //render
-    // ('.initial-add').on('submit', event => {
-    //   event.preventDefault();
-    //   store.toggleAddExpand();
-    //   render();
-    // });
+    $('.add-bookmark-container').on('click', '.initialAdd', event => {
+      store.setAddExpand(true);
+      render();
+    });
   }
 
   function handleAddBookmark() {
@@ -121,17 +128,23 @@ const bookmarks = (function() {
   }
 
   function handleCancelBookmarkExpand() {
-    //Listens for submit on target #expanded-add-bookmark's button .bookmarkCancel
+    //Listens for submit on .add-bookmark-container for target button .return
     //prevents default behavior
-    //runs store.toggleAddExpand function for store.addExpand property
+    //runs store.setAddExpand function and sets to false
     //render
   }
 
   function handleSelectBookmark() {
-    //Listens for submit on target .initial-bookmark-container's ul class .bookmark
+    //Listens for submit on #bookmark-container for target button .expand-me
     //prevents default behavior
     //toggles target bookmark's expanded property with store.targetBookmarkExpand
     //render
+    $('.bookmark-container').on('click', '.expand-me', event => {
+      event.preventDefault();
+      let targItem = getItemId(event.currentTarget);
+      store.setTargetBookmarkExpand(targItem);
+      render();
+    });
   }
 
   function handleDeleteBookmark() {
@@ -143,9 +156,16 @@ const bookmarks = (function() {
   }
 
   function handleSetRating() {
-    //listens for selection on dropdown
+    //listens for selection on dropdown (if statements?)
     //sets value of minStars property with store.setMinStars function
     //render
+    $('#rating-filter').on('change', event => {
+      let starRatingString = $(event.target).val();
+      let starRating = parseInt(starRatingString);
+      store.setMinStars(starRating);
+      render();
+      console.log(store.minStars);
+    });
   }
 
   function bindEventListeners() {
