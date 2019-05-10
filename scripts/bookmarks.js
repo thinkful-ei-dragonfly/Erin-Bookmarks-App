@@ -31,25 +31,21 @@ const bookmarks = (function() {
 
     if (!item.expanded) {
       return `
-      <li class="bookmark" item-id="${item.id}">
+      <li class="bookmark" data-item-id="${item.id}">
         <span class="bookmark-item"></span>
         <h3>${item.title}</h3>
         <p>${stars}</p>
-        <form id="expand-bookmark-button">
-            <button type="submit" class="expand-me">Expand</button>
-        </form>
+        <button type="button" class="expand-me">Expand</button>
       </li>
       `;}
     else {
       return `
-      <li class="bookmark" item-id="${item.id}">
+      <li class="bookmark" data-item-id="${item.id}">
         <span class="bookmark-item"></span>
         <h3>${item.title}</h3>
-        <form id="expanded-bookmark">
-            <button type="submit" class="bookmarkLink">Visit Page</button>
-            <button type="submit" class="delete">Delete</button>
-            <button type="submit" class="return">Return to list view</button>
-        </form>
+            <button type="button" class="bookmarkLink">Visit Page</button>
+            <button type="button" class="delete">Delete</button>
+            <button type="button" class="return">Return to list view</button>
         <p>${stars}</p>
         <p>${item.desc}</p>
       </li>`;}
@@ -145,9 +141,16 @@ const bookmarks = (function() {
     //toggles target bookmark's expanded property with store.targetBookmarkExpand
     //render
     $('.bookmark-container').on('click', '.expand-me', event => {
-      event.preventDefault();
-      let targItem = getItemId(event.currentTarget);
-      store.setTargetBookmarkExpand(targItem);
+      let id = getItemId(event.currentTarget);
+      store.setTargetBookmarkExpand(id);
+      render();
+    });
+  }
+
+  function handleReturnListView() {
+    $('.bookmark-container').on('click', '.return', event => {
+      let id = getItemId(event.currentTarget);
+      store.setTargetBookmarkExpand(id);
       render();
     });
   }
@@ -181,6 +184,7 @@ const bookmarks = (function() {
     handleSelectBookmark();
     handleDeleteBookmark();
     handleSetRating();
+    handleReturnListView();
   }
 
   return {
