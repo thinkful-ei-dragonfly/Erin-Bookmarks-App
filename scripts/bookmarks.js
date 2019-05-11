@@ -91,9 +91,9 @@ const bookmarks = (function() {
 
   function generateError(message) {
     return `
-    <p>${message}</p>
+    <p class= "error">${message}</p>
       <form id="error-message">
-          <button type="submit" class="cancelError">Cancel</button>
+          <button type="button" class="cancelError">Cancel</button>
       </form>
       `;
   }
@@ -237,6 +237,13 @@ const bookmarks = (function() {
     });
   }
 
+  function handleCancelError() {
+    $('.error-container').on('click', '.cancelError', event => {
+      store.setError(null);
+      renderError();
+    });
+  }
+
   function bindEventListeners() {
     getItemId();
     handleAddBookmarkExpand();
@@ -246,6 +253,7 @@ const bookmarks = (function() {
     handleDeleteBookmark();
     handleSetRating();
     handleReturnListView();
+    handleCancelError();
   }
 
   return {

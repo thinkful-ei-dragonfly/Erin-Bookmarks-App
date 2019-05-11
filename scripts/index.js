@@ -4,7 +4,6 @@
 
 $(document).ready(function() {
   bookmarks.bindEventListeners();
-
   api.getItems()
     .then(res => res.json())
     .then((items) => {
@@ -13,5 +12,7 @@ $(document).ready(function() {
     })
     .catch(err => console.log(err.message));
 });
+
+ 
 
 

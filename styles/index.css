@@ -31,6 +31,10 @@ hr {
   margin-bottom: 20px;
 }
 
+.error {
+  display: block;
+}
+
 button:hover {
   cursor: pointer;
 }
@@ -74,6 +78,10 @@ button {
 .bookmarkAdd, .bookmarkCancel {
   width: 25%;
   display: inline-block;
+}
+
+.cancelError {
+  margin-bottom: 25px;
 }
 
 .add-bookmark-container {
