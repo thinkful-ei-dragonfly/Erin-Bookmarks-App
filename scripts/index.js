@@ -1,5 +1,7 @@
 'use strict';
 
+//FINAL
+
 /* global bookmarks, store, api, $ */
 
 $(document).ready(function() {
