@@ -109,12 +109,16 @@ const bookmarks = (function() {
   }
 
   function render() {
-    //LATER: render error
-
+    //run renderError
+    //insert html for addBookmarkString
     //set variable for bookmarks array
     //filter minStars
-    //addExpand
     //inserts html for generateBookmarksString
+    renderError();
+
+    let bookmarkData = generateAddBookmarkString();
+    $('.add-bookmark-container').html(bookmarkData);
+ 
     let items = [...store.items];
 
     if (store.minStars > 0) {
@@ -122,10 +126,7 @@ const bookmarks = (function() {
       items = filteredItems;
     }
 
-    let bookmarkData = generateAddBookmarkString();
     let bookmarkString = generateBookmarkString(items);
-
-    $('.add-bookmark-container').html(bookmarkData);
     $('.bookmark-container').html(bookmarkString);
   }
    
@@ -157,14 +158,14 @@ const bookmarks = (function() {
       let rating = $('.add-rating').val();
       
       api.createItems(title, url, desc, rating)
-        .then(res => res.json())
+        //.then(res => res.json())
         .then((newItem) => {
           store.addItem(newItem);
           store.setAddExpand(false);
           render();
         })
         .catch((err) => {
-          //console.log(err);
+          console.log(err);
           store.setError(err.message);
           renderError();
         });
@@ -233,7 +234,6 @@ const bookmarks = (function() {
       // let starRating = parseInt(starRatingString);
       store.setMinStars(starRatingString);
       render();
-      console.log(store.minStars);
     });
   }
 

@@ -4,15 +4,21 @@
 
 $(document).ready(function() {
   bookmarks.bindEventListeners();
+
+  //   api.getItems()
+  //     .then((items) => {
+  //       items.forEach((item) => store.addItem(item));
+  //       bookmarks.render();
+  //     })
+  //     .catch(err => console.log(err.message));
+  // });
+
   api.getItems()
-    .then(res => res.json())
     .then((items) => {
-      items.forEach((item) => store.addItem(item));
+      items.forEach((item) => {
+        store.addItem(item);
+      });
       bookmarks.render();
     })
     .catch(err => console.log(err.message));
 });
-
- 
-
-
