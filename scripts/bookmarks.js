@@ -70,7 +70,8 @@ const bookmarks = (function() {
         <input type="text" class="addURL" name="addURL" placeholder="Add URL here" required>
         <input type="text" class="addDesc" name="addDesc" placeholder="Add description here"><br>
         <select name="add-rating" class="add-rating">
-          <option value="1" class ="option-1">1 Star</option>
+          <option value="null" class ="option-0">No Rating</option>
+          <option value="null" class ="option-1">1 Star</option>
           <option value="2" class ="option-2">2 Stars</option>
           <option value="3" class ="option-3">3 Stars</option>
           <option value="4" class ="option-4">4 Stars</option>
@@ -98,14 +99,13 @@ const bookmarks = (function() {
   }
 
   function renderError() {
-    let error = generateError(store.error);
     if (store.error) {
-      $('.error-container').innerHTML= this.error;
+      let el = generateError(store.error);
+      $('.error-container').html(el);
     }
     else {
       $('.error-container').empty();
     }
-    return error;
   }
 
   function render() {
@@ -117,7 +117,7 @@ const bookmarks = (function() {
     //inserts html for generateBookmarksString
     let items = [...store.items];
 
-    if (store.minStars) {
+    if (store.minStars > 0) {
       let filteredItems = items.filter(item => item.rating >= store.minStars);
       items = filteredItems;
     }
@@ -230,9 +230,10 @@ const bookmarks = (function() {
     //render
     $('#rating-filter').on('change', event => {
       let starRatingString = $(event.target).val();
-      let starRating = parseInt(starRatingString);
-      store.setMinStars(starRating);
+      // let starRating = parseInt(starRatingString);
+      store.setMinStars(starRatingString);
       render();
+      console.log(store.minStars);
     });
   }
 

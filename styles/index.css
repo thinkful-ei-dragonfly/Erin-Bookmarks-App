@@ -75,7 +75,7 @@ button {
 }
 
 .add-bookmark-container {
-  width: 100%;
+  width: 75%;
   display: block;
   margin: 10px auto 10px auto;
 }
@@ -94,6 +94,8 @@ h3, a {
 
 .stars {
   font-size: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 li {
