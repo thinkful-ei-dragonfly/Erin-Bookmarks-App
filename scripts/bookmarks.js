@@ -37,18 +37,47 @@ const bookmarks = (function() {
         <button type="button" class="expand-me">Expand</button>
       </li>
       `;}
+
+    else if (item.expanded && !item.editing) {
+      return `
+        <li class="bookmark" data-item-id="${item.id}">
+          <span class="bookmark-item"></span>
+            <h3>${item.title}</h3>
+            <hr>
+            <button type="button" class="delete">Delete</button>
+            <button type="button" class="return">Return</button>
+            <button type="button" class="bookmarkEdit">Edit</button>
+            <a href="${item.url}" class="link" target="_blank">Visit Page</a>
+          <p class="stars">${stars}</p>
+          <p class="desc">${item.desc}</p>
+        </li>`;}
+    
     else {
       return `
-      <li class="bookmark" data-item-id="${item.id}">
+        <li class="bookmark" data-item-id="${item.id}">
         <span class="bookmark-item"></span>
           <h3>${item.title}</h3>
           <hr>
           <button type="button" class="delete">Delete</button>
-          <button type="button" class="return">Return to list view</button>
+          <button type="button" class="return">Return</button>
+          <button type="button" class="cancelEdit">Cancel Edit</button>
           <a href="${item.url}" class="link" target="_blank">Visit Page</a>
-        <p class="stars">${stars}</p>
-        <p class="desc">${item.desc}</p>
-      </li>`;}
+          <form id="rating-edit" method="post">
+            <label for="edit-rating">Edit Rating: </label>
+            <select name="edit-rating" class="edit-rating">
+              <option value="null" class="null">View All</option>
+              <option value=1 class="one">1 Star</option>
+              <option value=2 class="two">2 Stars</option>
+              <option value=3 class="three">3 Stars</option>
+              <option value=4 class="four">4 Stars</option>
+              <option value=5 class="five">5 Stars</option>
+            </select><br>
+            <label for="editDesc">Edit Description:</label>
+            <input type="text" class="editDesc" name="editDesc" value=${item.desc}>
+            <button type="submit" class="submit-edit" name="submitEdit">Submit</button>
+           </form>
+          </li>`
+      ;}
   }
 
   function generateBookmarkString(items) {
@@ -71,7 +100,7 @@ const bookmarks = (function() {
         <input type="text" class="addDesc" name="addDesc" placeholder="Add description here"><br>
         <select name="add-rating" class="add-rating">
           <option value="null" class ="option-0">No Rating</option>
-          <option value="null" class ="option-1">1 Star</option>
+          <option value="1" class ="option-1">1 Star</option>
           <option value="2" class ="option-2">2 Stars</option>
           <option value="3" class ="option-3">3 Stars</option>
           <option value="4" class ="option-4">4 Stars</option>
@@ -244,6 +273,43 @@ const bookmarks = (function() {
     });
   }
 
+  function handleSetEdit() {
+    $('.bookmark-container').on('click', '.bookmarkEdit', event => {
+      let id = getItemId(event.currentTarget);
+      store.setEdit(id, true);
+      render();
+    });
+  }
+
+  function handleCancelEdit() {
+    $('.bookmark-container').on('click', '.cancelEdit', event => {
+      let id = getItemId(event.currentTarget);
+      store.setEdit(id, false);
+      render();
+    });
+  }
+
+  function handleSetNewValues() {
+    $('.bookmark-container').on('submit', '#rating-edit', event => {
+      event.preventDefault();
+      let id = getItemId(event.currentTarget);
+      let newRating = $('.edit-rating').val();
+      let newDesc = $('.editDesc').val();
+      // eslint-disable-next-line quotes
+      api.updateItems(id, newDesc, newRating)
+        .then(() => {
+          store.setEdit(id, false);
+          store.setNewValues(id, newRating, newDesc);
+          render();
+        })
+        .catch((err) => {
+          console.log(err);
+          store.setError(err.message);
+          renderError();
+        });
+    });
+  }
+
   function bindEventListeners() {
     getItemId();
     handleAddBookmarkExpand();
@@ -254,6 +320,9 @@ const bookmarks = (function() {
     handleSetRating();
     handleReturnListView();
     handleCancelError();
+    handleSetEdit();
+    handleCancelEdit();
+    handleSetNewValues();
   }
 
   return {

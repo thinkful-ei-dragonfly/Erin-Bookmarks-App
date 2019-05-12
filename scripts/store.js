@@ -5,6 +5,7 @@ const store = (function() {
 
   const addItem = function(item) {
     item.expanded = false;
+    item.editing = false;
     this.items.push(item);
   };
 
@@ -29,6 +30,17 @@ const store = (function() {
     this.error = error;
   };
 
+  const setEdit = function(id, value) {
+    let item = this.items.find(item => item.id === id);
+    item.editing = value;
+  };
+
+  const setNewValues = function(id, newRating, newDesc) {
+    let item = this.items.find(item => item.id === id);
+    item.rating = parseInt(newRating);
+    item.desc = newDesc;
+  };
+
   return {
     items: [],
     addExpand: false,
@@ -41,6 +53,8 @@ const store = (function() {
     setMinStars,
     setTargetBookmarkExpand,
     setError,
+    setEdit,
+    setNewValues,
   };
 
 }());

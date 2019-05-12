@@ -72,10 +72,24 @@ const api = (function() {
     });
   };
 
+  let updateItems= function(id, newDesc, newRating) {
+    let desc = newDesc;
+    let rating = parseInt(newRating);
+    let modifiedData = JSON.stringify({ desc, rating });
+    return listApiFetch(`${BASE_URL}/bookmarks/${id}`, {
+      method: 'PATCH',
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      }),
+      body: modifiedData
+    });
+  };
+
   return {
     getItems,
     createItems,
     deleteItems,
+    updateItems,
   };
 
 }());
